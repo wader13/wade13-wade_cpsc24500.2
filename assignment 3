@@ -1,0 +1,85 @@
+import java.util.Random;
+import java.util.Scanner;
+public class game {
+    public static void main(String[] args) {
+                Scanner scanner = new Scanner(System.in);
+                char playAgain;
+
+                do {
+                    displayRules();
+                    int userChoice = getUserChoice(scanner);
+                    int computerChoice = generateComputerChoice();
+                    displayChoices(userChoice, computerChoice);
+                    determineWinner(userChoice, computerChoice);
+                    System.out.print("Do you want to play again? (Y/N): ");
+                    playAgain = scanner.next().charAt(0);
+                } while (playAgain == 'Y' || playAgain == 'y');
+
+                System.out.println("Thank you for playing Rock, Paper, Scissors!");
+            }
+
+            public static void displayRules() {
+                System.out.println("Welcome to Rock, Paper, Scissors!");
+                System.out.println("Rules:");
+                System.out.println("1. Rock beats Scissors");
+                System.out.println("2. Scissors beats Paper");
+                System.out.println("3. Paper beats Rock");
+                System.out.println("Enter 1 for Rock, 2 for Paper, and 3 for Scissors");
+            }
+
+            public static int getUserChoice(Scanner scanner) {
+                int choice;
+                do {
+                    System.out.print("Enter your choice (1 for Rock, 2 for Paper, 3 for Scissors): ");
+                    while (!scanner.hasNextInt()) {
+                        System.out.println("Invalid input! Please enter a number.");
+                        scanner.next(); // discard non-integer input
+                    }
+                    choice = scanner.nextInt();
+                    if (choice < 1 || choice > 3) {
+                        System.out.println("Invalid choice! Please enter a number between 1 and 3.");
+                    }
+                } while (choice < 1 || choice > 3);
+                return choice;
+            }
+
+            public static int generateComputerChoice() {
+                Random random = new Random();
+                return random.nextInt(3) + 1; // Generates a random number between 1 and 3
+            }
+
+            public static void displayChoices(int userChoice, int computerChoice) {
+                System.out.println("Your choice: " + choiceToString(userChoice));
+                System.out.println("Computer's choice: " + choiceToString(computerChoice));
+            }
+
+            public static String choiceToString(int choice) {
+                switch (choice) {
+                    case 1:
+                        return "Rock";
+                    case 2:
+                        return "Paper";
+                    case 3:
+                        return "Scissors";
+                    default:
+                        return "Invalid choice";
+                }
+            }
+
+            public static void determineWinner(int userChoice, int computerChoice) {
+                if (userChoice == computerChoice) {
+                    System.out.println("It's a tie! Let's play again.");
+                } else if ((userChoice == 1 && computerChoice == 3) ||
+                        (userChoice == 2 && computerChoice == 1) ||
+                        (userChoice == 3 && computerChoice == 2)) {
+                    System.out.println("Congratulations! You win!");
+                } else {
+                    System.out.println("Sorry, you lose. Better luck next time!");
+                }
+            }
+        }
+
+
+
+
+
